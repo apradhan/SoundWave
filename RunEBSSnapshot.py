@@ -11,8 +11,8 @@ from Class.EBSSnapshotClass import EBSSnapshotClass  #from Class import *
 if __name__ == "__main__":
     import sys
     
-    #python RunEBSSnapshot.py i-acb8baea 4 Search-Trac Search-Trac_*
-    #python RunEBSSnapshot.py i-d5068e92 4 Search Search_*
+    #python RunEBSSnapshot.py i-xxxxxxxx 4 Search-Trac Search-Trac_*
+    #python RunEBSSnapshot.py i-xxxxxxxx 4 Search Search_*
     
     
     if len(sys.argv) <= 4:
