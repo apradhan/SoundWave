@@ -31,32 +31,50 @@ class EBSSnapshotClass:
        
         ec2_conn = EC2Connection(aws_access_key, aws_secret_key, region=region) 
         print 'Connection to EC2 established'
-        print ec2_conn
+        #print ec2_conn
         return ec2_conn
 
         
      
-    def backup_instance(self, backupparam):
+    def backup_instance(self, backupparam, ownerid, filterstring):
+        import sys
+        from boto.exception import EC2ResponseError
         
         print 'Backing up EC2 instance.'
-        print backupparam
+        #print backupparam, ownerid, filterstring
         ec2_conn = backupparam[0]
         instances = ec2_conn.get_all_instances(instance_ids=[backupparam[1]])
         #print instances
     
         instid = backupparam[1]
         datestring = self.get_date()
-        #datestring = '2013-04-04'
         paramdate = backupparam[3] + '_' + datestring
-        #print paramdate     
+        print paramdate
+        
+        #The following was put incase I want to automatically append the image name, it uses ownerid and filterstring
+        #target = ec2_conn.get_all_images(owners=[ownerid],filters={'name': filterstring})
+        #for img in target:
+        #    #print img, img.name, img.id
+        #    if img.name == paramdate:
+        #        print "ami name already exits", img.name
+                
         return 1  #Uncomment for testing purposes
         
-        if ec2_conn.create_image(instid, paramdate, no_reboot=False):
-            print 'Image created with description: ' + paramdate
-            return 1
-        else:
-            print 'AMI image was not created.' 
-            return 0
+        try:
+            if ec2_conn.create_image(instid, paramdate, no_reboot=False):
+                print 'Image created with description: ' + paramdate
+                return 1
+            else:
+                print 'AMI image was not created.' 
+                return 0
+        except EC2ResponseError:
+            print "400 Bad Request"
+            print "It looks like the AMI Name, " + paramdate + " is already in use."
+        except Exception as e:
+            print "Unexpected error:", sys.exc_info()[0]
+            print e
+            raise
+             
             
     def get_date(self):
         import datetime

@@ -11,8 +11,8 @@ from Class.EBSSnapshotClass import EBSSnapshotClass  #from Class import *
 if __name__ == "__main__":
     import sys
     
-    #python RunEBSSnapshot.py i-xxxxxxxx 4 Search-Trac Search-Trac_*
-    #python RunEBSSnapshot.py i-xxxxxxxx 4 Search Search_*
+    #python RunEBSSnapshot.py i-acb8baea 4 Search-Trac Search-Trac_*
+    #python RunEBSSnapshot.py i-d5068e92 4 Search Search_*
     
     
     if len(sys.argv) <= 4:
@@ -24,7 +24,7 @@ if __name__ == "__main__":
     keep = int(sys.argv[2]) 
     desc = sys.argv[3] 
     amifilter = sys.argv[4]
-    print instid + '  ' + str(keep) + '  ' + desc + '  ' + amifilter
+    #print instid + '  ' + str(keep) + '  ' + desc + '  ' + amifilter
     
     #exit()
         
@@ -35,25 +35,25 @@ if __name__ == "__main__":
 
      
     now = datetime.datetime.now()
-    print 'Program Start  ' + now.strftime("%Y-%m-%d %H:%M")  #now = datetime.datetime.now() 
+    #print 'Program Start  ' + now.strftime("%Y-%m-%d %H:%M")  #now = datetime.datetime.now() 
     
     timestamp =  now.strftime("%Y%m%d_%H%M%S") 
-    print timestamp
+    #print timestamp
     
     
     myEBSSnapshot = EBSSnapshotClass()
     myec2_conn = myEBSSnapshot.connect(aws_access_key, aws_secret_key)
 
-    print instid + '  ' + str(keep) + '  ' + desc
+    #print instid + '  ' + str(keep) + '  ' + desc
 
     params = [myec2_conn, instid, keep, desc]
-    print params
+    print 'params: ' + str(params)
     
-    myEBSSnapshot.backup_instance(params)
+    myEBSSnapshot.backup_instance(params, amiownerid, amifilter)
      
     #After you create an AMI above, it is counted as one of AMIs that is retained by the line below
      
-    #myEBSSnapshot.del_older_ami(params, amiownerid, amifilter) 
+    myEBSSnapshot.del_older_ami(params, amiownerid, amifilter) 
      
     
     #backup_volumes(myparams)
