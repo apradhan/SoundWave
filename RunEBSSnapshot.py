@@ -1,5 +1,6 @@
 import datetime
 from Class.EBSSnapshotClass import EBSSnapshotClass  #from Class import *
+from Class.EBSConnectClass import EBSConnectClass  #from Class import *
 
 #import sys, getopt, boto
 #from boto.ec2.image import Image
@@ -11,8 +12,6 @@ from Class.EBSSnapshotClass import EBSSnapshotClass  #from Class import *
 if __name__ == "__main__":
     import sys
     
-    #python RunEBSSnapshot.py i-acb8baea 4 Search-Trac Search-Trac_*
-    #python RunEBSSnapshot.py i-d5068e92 4 Search Search_*
     
     
     if len(sys.argv) <= 4:
@@ -29,9 +28,7 @@ if __name__ == "__main__":
     #exit()
         
     #Parameters, substitute your own below
-    aws_access_key = ''
-    aws_secret_key = ''
-    amiownerid = ''
+    amiownerid = '' #AWS owner ID goes here
 
      
     now = datetime.datetime.now()
@@ -42,7 +39,12 @@ if __name__ == "__main__":
     
     
     myEBSSnapshot = EBSSnapshotClass()
-    myec2_conn = myEBSSnapshot.connect(aws_access_key, aws_secret_key)
+    
+ 
+    myEBSConnect = EBSConnectClass()
+    myec2_conn = myEBSConnect.connect()
+    print myec2_conn
+
 
     #print instid + '  ' + str(keep) + '  ' + desc
 

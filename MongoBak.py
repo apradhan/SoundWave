@@ -4,9 +4,6 @@ from Class.MongoBackupClass import MongoBackupClass
 if __name__ == "__main__":
     import sys
     
-    #python MongoBak.py structure cids 'is_assigned: t'
-    #python MongoBak.py structure holding ''
-    #python MongoBak.py structure cids ''  #once a week implement file name passing
     
     if len(sys.argv) <= 3:
         print "Usage: You need a database name, a collection name and a find expression, 'collectionfield: value'"    

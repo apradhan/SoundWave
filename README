@@ -1,1 +1,10 @@
 This repository is for AWS backup applications written in Python and Boto.
+
+RunEBSBackup run snapshots of volumes whose ID can be given on the command line.  There is also a parameter
+that specifies how many snapshots to keep for each volume by date.
+
+RunEBSSnapshot creats AMIs for the specified instance.  Associated snapshots are created with each AMI and 
+a parameter can be use to specify how many AMIs to retain by date.
+
+MongoBak creates a copy of a collection. This app can be put on a cron job thereby macking a hourly, daily, weekly
+etc. copy of a mongodb collection

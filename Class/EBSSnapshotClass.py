@@ -15,25 +15,6 @@ class EBSSnapshotClass:
                 raise Exception("Key {} found multiple times in list {)".format(key, lst))
             dict[key] = value
         return dict
-    
-     
-     
-    def connect(self, accesskey, secretkey): 
-        import sys
-        from boto.ec2.connection import EC2Connection
-        from boto.ec2.regioninfo import RegionInfo
-        
-        # Substitute your access key and secret key here
-        aws_access_key = accesskey
-        aws_secret_key = secretkey
-        # Change to your region/endpoint...
-        region = RegionInfo(endpoint='us-west-1.ec2.amazonaws.com', name='us-west-1')
-       
-        ec2_conn = EC2Connection(aws_access_key, aws_secret_key, region=region) 
-        print 'Connection to EC2 established'
-        #print ec2_conn
-        return ec2_conn
-
         
      
     def backup_instance(self, backupparam, ownerid, filterstring):
@@ -58,7 +39,7 @@ class EBSSnapshotClass:
         #    if img.name == paramdate:
         #        print "ami name already exits", img.name
                 
-        return 1  #Uncomment for testing purposes
+        #return 1  #Uncomment for testing purposes
         
         try:
             if ec2_conn.create_image(instid, paramdate, no_reboot=False):
@@ -139,7 +120,7 @@ class EBSSnapshotClass:
             else:
                 print 'zap the ami ' + amilist[1]
                 #Comment out line below for testing purposes
-                #ec2_conn.deregister_image(amilist[1], delete_snapshot=True)
+                ec2_conn.deregister_image(amilist[1], delete_snapshot=True)
                 print 'AMI ' + amilist[0] + ' with image id of ' + amilist[1] + ' is deleted along with associated snapshots.'
             cnt += 1
         
